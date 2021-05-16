@@ -138,8 +138,8 @@ class _MyAppState extends State<MyApp> {
     }
 
     jpush.setup(
-      appKey: "d9a29da602f5bc95d77c756a", //你自己应用的 AppKey 在极光推送里看
-      channel: "developer-default",//developer开发者  default默认
+      appKey: "c1f8e7e8fd5289f6f658286b", //你自己应用的 AppKey 在极光推送里看
+      channel: "theChannel",//theChannel 频道  developer开发者 - default默认
       production: inProduction,//production 生产
       debug: inProduction,//生产模式 ture 打印debug日志 反之亦然 打包完是FALSE
     );
@@ -241,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             Text(
-              '$_counter' + "输出的是推送",
+              '$_counter' + "输出安装于",
               style: Theme.of(context).textTheme.headline4,
             ),
           ],
