@@ -11,36 +11,36 @@
 	},
 	"client":{
 		"cp_id":"260086000307499252",
-		"product_id":"736430079245716873",
-		"client_id":"628157541666260160",
-		"client_secret":"1702458BAAC306779D86E55892ABC9B5518711D564621C6D25300F6DF846F778",
-		"project_id":"736430079245716873",
-		"app_id":"104329073",
-		"api_key":"CgB6e3x95CfefhgZxvwrXEXyALjuxVTbEYP4p2S/XpEoCtR9UvfM1bUGwh3BUTKCQ6tdD6A1Iq1/IXcV9tUjgqmG",
-		"package_name":"com.example.flutter_yuan"
+		"product_id":"736430079245716986",
+		"client_id":"628217710987197376",
+		"client_secret":"7AEABF4FACC39DFA99C0712672F56F7720563B36F40C3B7A79B12EF6F3F03677",
+		"project_id":"736430079245716986",
+		"app_id":"104329237",
+		"api_key":"CgB6e3x9MuKZXGblnsn3RspLUwwwy9wCRFUghHGUb+ShspJC2xF5QrI6HuWGzaYQqkCqg3U4IdXnSREariMgTFjo",
+		"package_name":"io.flutter.app.FlutterApplication"
 	},
 	"oauth_client":{
-		"client_id":"104329073",
+		"client_id":"104329237",
 		"client_type":1
 	},
 	"app_info":{
-		"app_id":"104329073",
-		"package_name":"com.example.flutter_yuan"
+		"app_id":"104329237",
+		"package_name":"io.flutter.app.FlutterApplication"
 	},
 	"configuration_version":"3.0",
 	"appInfos":[
 		{
-			"package_name":"com.example.flutter_yuan",
+			"package_name":"io.flutter.app.FlutterApplication",
 			"client":{
-				"app_id":"104329073"
+				"app_id":"104329237"
 			},
 			"app_info":{
-				"package_name":"com.example.flutter_yuan",
-				"app_id":"104329073"
+				"package_name":"io.flutter.app.FlutterApplication",
+				"app_id":"104329237"
 			},
 			"oauth_client":{
 				"client_type":1,
-				"client_id":"104329073"
+				"client_id":"104329237"
 			}
 		}
 	]
