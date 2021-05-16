@@ -137,9 +137,9 @@ class _MyAppState extends State<MyApp> {
       platformVersion = 'Failed to get platform version.';
     }
 
-    jpush.setup(
-      appKey: "c1f8e7e8fd5289f6f658286b", //你自己应用的 AppKey 在极光推送里看
-      channel: "theChannel",//theChannel 频道  developer开发者 - default默认
+    jpush.setup(//io.flutter.xxxx  的是 c1f8e7e8fd5289f6f658286b
+      appKey: "d9a29da602f5bc95d77c756a", //你自己应用的 AppKey 在极光推送里看d9a29da602f5bc95d77c756a
+      channel: "developer-default",//theChannel 频道  developer开发者 - default默认
       production: inProduction,//production 生产
       debug: inProduction,//生产模式 ture 打印debug日志 反之亦然 打包完是FALSE
     );
@@ -153,14 +153,15 @@ class _MyAppState extends State<MyApp> {
         debugLable = "flutter getRegistrationID: $rid";
       });
     });
-    /* // If the widget was removed from the tree while the asynchronous platform
+ // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
 
     setState(() {
       debugLable = platformVersion;
-    });*/
+    });
+
   }
 
   @override
@@ -241,7 +242,7 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             Text(
-              '$_counter' + "输出安装于",
+              '$_counter' + "输出包名33",
               style: Theme.of(context).textTheme.headline4,
             ),
           ],
