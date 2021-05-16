@@ -51,7 +51,8 @@ dependencies:
   weui: ^0.0.8
   #左滑删除
   left_scroll_actions: ^1.5.3
-  #推送  有问题 初次编译不能加载 会导致报错 0.6.3不能    jpush_flutter: ^0.6.3
+  #推送  有问题 初次编译不能加载 2.0以下用 0.6.3
+  jpush_flutter: ^0.6.3
   #图片压缩
   flutter_luban: ^0.1.11
   #轮播图

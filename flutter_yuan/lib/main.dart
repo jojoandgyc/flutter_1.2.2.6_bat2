@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:jpush_flutter/jpush_flutter.dart';
 
 import 'golbalPake/golbal.dart';
 
@@ -85,6 +87,97 @@ class MyApp extends StatelessWidget {
 }
 */
 
+class MyApp extends StatefulWidget {
+  const MyApp({Key key}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String debugLable = 'Unknown';
+  final JPush jpush = new JPush();
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    String platformVersion;//是否为生产模式 Environment 环境
+    const bool  inProduction= const  bool.fromEnvironment("dart.vm.product");
+
+    try {
+      jpush.addEventHandler(
+          onReceiveNotification: (Map<String, dynamic> message) async {
+        print("flutter onReceiveNotification: $message");
+        setState(() {
+          debugLable = "flutter onReceiveNotification: $message";
+        });
+      }, onOpenNotification: (Map<String, dynamic> message) async {
+        print("flutter onOpenNotification: $message");
+        setState(() {
+          debugLable = "flutter onOpenNotification: $message";
+        });
+      }, onReceiveMessage: (Map<String, dynamic> message) async {
+        print("flutter onReceiveMessage: $message");
+        setState(() {
+          debugLable = "flutter onReceiveMessage: $message";
+        });
+      }, onReceiveNotificationAuthorization:
+              (Map<String, dynamic> message) async {
+        print("flutter onReceiveNotificationAuthorization: $message");
+        setState(() {
+          debugLable = "flutter onReceiveNotificationAuthorization: $message";
+        });
+      });
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+
+    jpush.setup(
+      appKey: "d9a29da602f5bc95d77c756a", //你自己应用的 AppKey 在极光推送里看
+      channel: "developer-default",//developer开发者  default默认
+      production: inProduction,//production 生产
+      debug: inProduction,//生产模式 ture 打印debug日志 反之亦然 打包完是FALSE
+    );
+    jpush.applyPushAuthority(
+        new NotificationSettingsIOS(sound: true, alert: true, badge: true));
+
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    jpush.getRegistrationID().then((rid) {
+      print("flutter get registration id : $rid");
+      setState(() {
+        debugLable = "flutter getRegistrationID: $rid";
+      });
+    });
+    /* // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      debugLable = platformVersion;
+    });*/
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.yellow,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
+
+/*// 原MYAPP
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -100,6 +193,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+*/
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -118,6 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     loadData();
   }
+
 //用于 Dio 测试
   void loadData() async {
     //instance 列子
@@ -125,6 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
       "id": "sdsadas",
     });
   }
+
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -145,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             Text(
-              '$_counter'+"输出",
+              '$_counter' + "输出的是推送",
               style: Theme.of(context).textTheme.headline4,
             ),
           ],
@@ -159,3 +255,61 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+/*//极光推送
+Future<void> initPlatformState() async {
+    String platformVersion;
+
+    try {
+      jpush.addEventHandler(
+          onReceiveNotification: (Map<String, dynamic> message) async {
+        print("flutter onReceiveNotification: $message");
+        setState(() {
+          debugLable = "flutter onReceiveNotification: $message";
+        });
+      }, onOpenNotification: (Map<String, dynamic> message) async {
+        print("flutter onOpenNotification: $message");
+        setState(() {
+          debugLable = "flutter onOpenNotification: $message";
+        });
+      }, onReceiveMessage: (Map<String, dynamic> message) async {
+        print("flutter onReceiveMessage: $message");
+        setState(() {
+          debugLable = "flutter onReceiveMessage: $message";
+        });
+      }, onReceiveNotificationAuthorization:
+              (Map<String, dynamic> message) async {
+        print("flutter onReceiveNotificationAuthorization: $message");
+        setState(() {
+          debugLable = "flutter onReceiveNotificationAuthorization: $message";
+        });
+      });
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+
+    jpush.setup(
+      appKey: "xxxxx", //你自己应用的 AppKey
+      channel: "theChannel",
+      production: false,
+      debug: true,
+    );
+    jpush.applyPushAuthority(
+        new NotificationSettingsIOS(sound: true, alert: true, badge: true));
+
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    jpush.getRegistrationID().then((rid) {
+      print("flutter get registration id : $rid");
+      setState(() {
+        debugLable = "flutter getRegistrationID: $rid";
+      });
+    });
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      debugLable = platformVersion;
+    });
+  }*/
