@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_yuan/utils_rsa/tuils.dart';
 
 class login extends StatefulWidget {
   const login({ Key key}) : super(key: key);
@@ -10,20 +11,29 @@ class login extends StatefulWidget {
 
 class _loginState extends State<login> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("輸出");
+    print(encodeString("123456"));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("登录页面"),
-        bottom: denglu(),
-      ),
+        appBar: AppBar(
+          title: Text("登录页面"),
+          /*          bottom: RaisedButton
 
-    );
+*/
+          ),
+      body: Denglu(),
+        );
   }
 
-  denglu() {
-    return Denglu();
-  }
+
 }
+
 class Denglu extends StatelessWidget {
   const Denglu({ Key key}) : super(key: key);
 
@@ -32,9 +42,8 @@ class Denglu extends StatelessWidget {
     return RaisedButton(
         child: Text("登录"),
         textColor: Colors.amber,
-        onPressed: (){
-          return ;
-
+        onPressed: () {
+          print(encodeString("123456"));
         });
   }
 }

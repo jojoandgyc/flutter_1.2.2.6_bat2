@@ -11,9 +11,9 @@
             android:src="@mipmap/launch_image" />
     </item>
    <!-- 或者  添加启动图  -->
-    <item
+   <!-- <item
         android:drawable="@android:drawable/ic_menu_always_landscape_portrait">
 
-    </item>
+    </item>-->
 
 </layer-list>

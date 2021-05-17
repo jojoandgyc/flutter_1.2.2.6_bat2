@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_yuan/mvvmDemo_View/view.dart';
+import 'package:flutter_yuan/utils_rsa/tuils.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
 
 import 'golbalPake/golbal.dart';
@@ -173,7 +175,7 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.yellow,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: login(),//MyHomePage(title: 'Flutter111 Demo Home Page'),
     );
   }
 }
@@ -212,6 +214,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // TODO: implement initState
     super.initState();
     loadData();
+    print("开始输出加密");
+    encodeString('213');
   }
 
 //用于 Dio 测试
