@@ -1,13 +1,26 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_yuan/mvvmDemo_View/view.dart';
+import 'package:flutter_yuan/provider/login_mvvmviewmodel.dart';
+import 'package:flutter_yuan/routes/routes.dart';
 import 'package:flutter_yuan/utils_rsa/tuils.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
+import 'package:provider/provider.dart';
 
 import 'golbalPake/golbal.dart';
 
 void main() {
   runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+              create: (context)=>LoginViewModel_logding(),
+          ),
+        ],
+        child:MyApp() ,
+      ),
+  );
       /* //全局变量
   MultiProvider(
     providers: [
@@ -31,7 +44,7 @@ ChangeNotifierProvider(
     ],
     child: MyApp(),
   ),*/
-      MyApp());
+      //MyApp());
 }
 
 /* //项目路由页面
@@ -110,7 +123,6 @@ class _MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     String platformVersion;//是否为生产模式 Environment 环境
     const bool  inProduction= const  bool.fromEnvironment("dart.vm.product");
-
     try {
       jpush.addEventHandler(
           onReceiveNotification: (Map<String, dynamic> message) async {
@@ -169,13 +181,14 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: routes,//  "/"默认为初始页面
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.yellow,
+        primarySwatch: Colors.blueGrey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: login(),//MyHomePage(title: 'Flutter111 Demo Home Page'),
+     //不能跟 routes 一起用 home: login(),//MyHomePage(title: 'Flutter111 Demo Home Page'),
     );
   }
 }
