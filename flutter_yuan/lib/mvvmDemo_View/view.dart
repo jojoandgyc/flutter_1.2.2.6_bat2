@@ -20,6 +20,7 @@ class login extends StatefulWidget {
 
 class _loginState extends State<login> {
   int _a;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -27,6 +28,7 @@ class _loginState extends State<login> {
     print("輸出");
     print(encodeString("123456"));
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -62,7 +64,8 @@ class _loginState extends State<login> {
           Padding(
               padding: EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
               child: TextField(
-                controller: Provider.of<LoginViewModel_logding>(context).getUser,
+                controller:
+                    Provider.of<LoginViewModel_logding>(context).getUser,
                 //text field 文本对象  Flutter自带组件
                 decoration: InputDecoration(
                   //decoration 装饰
@@ -70,7 +73,7 @@ class _loginState extends State<login> {
                   hintText: "请输入账户",
                   prefix: Icon(Icons.person), //左侧按钮
                 ),
-                autofocus: true, //自动获取焦点
+                autofocus: false, //自动获取焦点
                 textInputAction: TextInputAction.next,
               )),
           Padding(
@@ -84,14 +87,17 @@ class _loginState extends State<login> {
                 hintText: "请输入密码",
                 prefix: Icon(Icons.lock), //左侧按钮
               ),
-              autofocus: true, //自动获取焦点
-              textInputAction: TextInputAction.next,
-              onSubmitted: (e) {
-                Denglu();
+              autofocus: false,
+              //自动获取焦点
+              //textInputAction: TextInputAction.next,
+                onSubmitted: (e) {//onSubmitted 按回车的回调
+                print("按下回车发生的回调事件");
+                Denglu();//无效
               },
             ),
           ),
-          GestureDetector(//Gestures 手势 Detector 探测器
+          GestureDetector(
+            //Gestures 手势 Detector 探测器
             child: Container(
               width: double.infinity,
               child: Text(
@@ -105,27 +111,34 @@ class _loginState extends State<login> {
               print("找回密码事件");
             },
           ),
-          WeButton(
-            "登录", // 全局  of 在 <类型>        传哪里  本页面控制块
-            loading: Provider.of<LoginViewModel_logding>(context).getIsLogin,
-            theme: WeButtonType.primary,
-            onClick: () {
-              print("登录点击事件");
-              _a=1;
-              _login();
-            },
-          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+            WeButton(
+              "登录", // 全局  of 在 <类型>        传哪里  本页面控制块
+              size: WeButtonSize.mini,
+              loading: Provider.of<LoginViewModel_logding>(context).getIsLogin,
+              theme: WeButtonType.primary,
+              onClick: () {
+                print("登录点击事件");
+                _a = 1;
+                _login();
+              },
+            ),
+            WeButton(
+              "注册", // 全局  of 在 <类型>        传哪里  本页面控制块
+              // loading: Provider.of<LoginViewModel_logding>(context).getIsLogin,
+              theme: WeButtonType.primary,
+              size: WeButtonSize.mini,
+              onClick: () {
+                print("注册点击事件");
+                _a = 2;
+                _login();
+              },
+            ),
+          ]),
+
           //Denglu(),
-          WeButton(
-            "注册", // 全局  of 在 <类型>        传哪里  本页面控制块
-           // loading: Provider.of<LoginViewModel_logding>(context).getIsLogin,
-            theme: WeButtonType.primary,
-            onClick: () {
-              print("注册点击事件");
-              _a=2;
-              _login();
-            },
-          ),
         ],
       ),
       /*Padding(
@@ -194,16 +207,15 @@ class _loginState extends State<login> {
     new Timer(Duration(seconds: 2), () {
       //释放 二值信号量
       context.read<LoginViewModel_logding>().setIsLogin(false);
-     if(_a==1){
-       Navigator.of(context).pushNamed("menu");
-      //跳转完 在下一个活动页里 这页的内容 不会输出被捕获
-       print(Provider.of<LoginViewModel_logding>(context).getUser);
-     }else{
-       print(Provider.of<LoginViewModel_logding>(context).getPass);
-
-       Navigator.of(context).pushNamed("register");
-
-     }
+      if (_a == 1) {
+        Navigator.of(context).pushNamed("menu");
+        //跳转完 在下一个活动页里 这页的内容 不会输出被捕获
+        print(Provider.of<LoginViewModel_logding>(context).getUser);
+      } else if (_a == 2) {
+        Navigator.of(context).pushNamed("register");
+      } else {
+        print("无效");
+      }
     });
   }
 }
@@ -214,11 +226,11 @@ class Denglu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WeButton(
-      "登录", // 全局  of 在 <类型>        传哪里  本页面控制块
+      "回调", // 全局  of 在 <类型>        传哪里  本页面控制块
       loading: Provider.of<LoginViewModel_logding>(context).getIsLogin,
       theme: WeButtonType.primary,
       onClick: () {
-        print("登录点击事件");
+        print("回调");
       },
     );
     /*RaisedButton(
