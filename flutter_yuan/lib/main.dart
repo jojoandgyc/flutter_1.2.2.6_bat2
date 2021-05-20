@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_yuan/mvvmDemo_View/view.dart';
-import 'package:flutter_yuan/provider/login_mvvmviewmodel.dart';
+import 'package:flutter_yuan/mvvmDemo_View/login.dart';
+import 'package:flutter_yuan/mvvmDemo_ViewModel/login_mvvmviewmodel.dart';
 import 'package:flutter_yuan/routes/routes.dart';
 import 'package:flutter_yuan/utils_rsa/tuils.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
@@ -10,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import 'golbalPake/golbal.dart';
 
+final GlobalKey<NavigatorState> navigatorKey =new GlobalKey<NavigatorState>();
 void main() {
   runApp(
       MultiProvider(
@@ -154,8 +154,8 @@ class _MyAppState extends State<MyApp> {
     jpush.setup(//io.flutter.xxxx  的是 c1f8e7e8fd5289f6f658286b
       appKey: "d9a29da602f5bc95d77c756a", //你自己应用的 AppKey 在极光推送里看d9a29da602f5bc95d77c756a
       channel: "developer-default",//theChannel 频道  developer开发者 - default默认
-      production: inProduction,//production 生产
-      debug: inProduction,//生产模式 ture 打印debug日志 反之亦然 打包完是FALSE
+      production:false,// inProduction,//production 生产
+      debug:false,//inProduction,//生产模式 ture 打印debug日志 反之亦然 打包完是FALSE
     );
     jpush.applyPushAuthority(
         new NotificationSettingsIOS(sound: true, alert: true, badge: true));
@@ -181,6 +181,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       routes: routes,//  "/"默认为初始页面
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -251,6 +252,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

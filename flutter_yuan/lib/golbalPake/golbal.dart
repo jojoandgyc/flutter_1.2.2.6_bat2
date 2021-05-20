@@ -15,15 +15,15 @@ class Golbal {
   Golbal() {
     //无参构造
     dio = new Dio(); //对Dio 进行初始化
-    dio.options = BaseOptions(
+    dio.options = BaseOptions(//OPtions 选择
       //base 基本选项
       baseUrl: "http://42.193.118.40:3000",
       // 这里的/不用加 使用的时候加
       connectTimeout: 5000,
-      //connect 连接
+      //connect 连接 超时
       sendTimeout: 5000,
       receiveTimeout: 5000,
-      //receive 接收
+      //receive 接收 超时
       headers: {
         "token": "321213123",
         "code": "string",

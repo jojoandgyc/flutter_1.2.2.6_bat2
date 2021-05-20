@@ -8,7 +8,7 @@ import 'package:flutter_yuan/utils_rsa/data.dart';
  传入   Content = 加密前的文本     用公钥加密完返回
 * */
 
-
+// 输入加密内容 返回加密后文本
 Future<String> encodeString(String content) async {
   var publicKey = RSAKeyParser().parse(pubKey); //parse 解析 生成公钥
   //encrypter 加密的 encryoted 加密  ancrypter 传的是公钥

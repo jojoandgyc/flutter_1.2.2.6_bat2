@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_yuan/base/login_getAPPbar.dart';
-import 'package:flutter_yuan/provider/login_mvvmviewmodel.dart';
+import 'package:flutter_yuan/mvvmDemo_ViewModel/login_mvvmviewmodel.dart';
 import 'package:flutter_yuan/utils_rsa/tuils.dart';
 import 'package:provider/provider.dart';
 import 'package:weui/button/index.dart';
@@ -25,8 +25,6 @@ class _loginState extends State<login> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("輸出");
-    print(encodeString("123456"));
   }
 
   @override
@@ -64,7 +62,7 @@ class _loginState extends State<login> {
           Padding(
               padding: EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
               child: TextField(
-                controller:
+                controller://接收文本
                     Provider.of<LoginViewModel_logding>(context).getUser,
                 //text field 文本对象  Flutter自带组件
                 decoration: InputDecoration(
@@ -89,7 +87,7 @@ class _loginState extends State<login> {
               ),
               autofocus: false,
               //自动获取焦点
-              //textInputAction: TextInputAction.next,
+           //   textInputAction: TextInputAction.send,
                 onSubmitted: (e) {//onSubmitted 按回车的回调
                 print("按下回车发生的回调事件");
                 Denglu();//无效
@@ -102,7 +100,6 @@ class _loginState extends State<login> {
               width: double.infinity,
               child: Text(
                 "找回密码",
-
                 style: TextStyle(color: Colors.blueAccent),
                 textAlign: TextAlign.right, //处于最右侧
               ),
@@ -137,7 +134,6 @@ class _loginState extends State<login> {
               },
             ),
           ]),
-
           //Denglu(),
         ],
       ),
@@ -202,11 +198,12 @@ class _loginState extends State<login> {
   }
 
   void _login() {
-    //logding图标
-    context.read<LoginViewModel_logding>().setIsLogin(true);
-    new Timer(Duration(seconds: 2), () {
+// 在当前上下文读取        在viewmodel 中转层    上下文传进去    这句有问题
+    context.read<LoginViewModel_logding>().Logind(context);
+    print("Login执行结束");
+/*    new Timer(Duration(seconds: 2), () {
       //释放 二值信号量
-      context.read<LoginViewModel_logding>().setIsLogin(false);
+      context.read <LoginViewModel_logding>().setIsLogin(false);
       if (_a == 1) {
         Navigator.of(context).pushNamed("menu");
         //跳转完 在下一个活动页里 这页的内容 不会输出被捕获
@@ -216,8 +213,10 @@ class _loginState extends State<login> {
       } else {
         print("无效");
       }
-    });
+    });*/
   }
+
+
 }
 
 class Denglu extends StatelessWidget {

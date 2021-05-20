@@ -41,6 +41,10 @@ class _RegisterViewState extends State<RegisterView> {
           WeInput(
             label: "验证码",
             hintText: "请输出验证码",
+/*            style: TextStyle.lerp(TextStyle(
+                backgroundColor: Colors.blueAccent),
+                TextStyle(backgroundColor: Colors.yellow),
+                3),*/
             textInputAction: TextInputAction.next,
             type: TextInputType.name,
             clearable: true,
@@ -49,11 +53,12 @@ class _RegisterViewState extends State<RegisterView> {
           WeInput(
             label: "ID",
             hintText: "请输出用户ID",
+
             textInputAction: TextInputAction.next,
             type: TextInputType.name,
             footer: Row(
               children: [
-                WeSwitch(),
+                WeSwitch(size: 20,),
                 SizedBox(
                   width: 8,
                 ),
@@ -67,7 +72,7 @@ class _RegisterViewState extends State<RegisterView> {
             content: "",
             footer: Row(
               children: [
-                WeSwitch(),
+                WeSwitch(size: 20,),
                 SizedBox(
                   width: 8,
                 ),
