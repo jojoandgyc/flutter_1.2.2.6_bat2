@@ -4,12 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_yuan/base/login_getAPPbar.dart';
+import 'package:flutter_yuan/eventbus/event_bus.dart';
 import 'package:flutter_yuan/mvvmDemo_ViewModel/login_mvvmviewmodel.dart';
 import 'package:flutter_yuan/utils_rsa/tuils.dart';
 import 'package:provider/provider.dart';
 import 'package:weui/button/index.dart';
 import 'package:weui/form/index.dart';
 import 'package:weui/input/index.dart';
+import 'package:weui/toast/index.dart';
 
 class login extends StatefulWidget {
   const login({Key key}) : super(key: key);
@@ -20,19 +22,35 @@ class login extends StatefulWidget {
 
 class _loginState extends State<login> {
   int _a;
+  TextEditingController _user;
+  TextEditingController _pass;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+     _user= new TextEditingController();
+     _pass= new TextEditingController();
+     //注册订阅事件  EventCallback 回调事件 返回当前页面上下文
+    bus.on("fail", (arg) {//arg 自变量 当前界面的上下文
+      print("进入bus处理事件");
+      if(arg["view"]=="login"){//当前页面 名字为 mvvm里View login
+        WeToast.fail(context)(message:arg["message"]);
+      }
+    });
   }
+
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    Provider.of<LoginViewModel_logding>(context).getUser.dispose();
-    Provider.of<LoginViewModel_logding>(context).getPass.dispose();
+/*  被事件event总线bus 替代 eventbus*//*
+    Provider.of<LoginViewModel_logding>(context,listen: false).getUser.dispose();
+    Provider.of<LoginViewModel_logding>(context,listen: false).getPass.dispose();*/
+    _pass.dispose();
+    _user.dispose();
+    bus.off("fail");//关闭 订阅后 再使用此订阅不会再有 消息返回
   }
 
   @override
@@ -62,8 +80,8 @@ class _loginState extends State<login> {
           Padding(
               padding: EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
               child: TextField(
-                controller://接收文本
-                    Provider.of<LoginViewModel_logding>(context).getUser,
+                controller:_user,//接收文本
+                    //Provider.of<LoginViewModel_logding>(context,listen: false).getUser,
                 //text field 文本对象  Flutter自带组件
                 decoration: InputDecoration(
                   //decoration 装饰
@@ -77,7 +95,7 @@ class _loginState extends State<login> {
           Padding(
             padding: EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 0),
             child: TextField(
-              controller: Provider.of<LoginViewModel_logding>(context).getPass,
+              controller: _pass,//Provider.of<LoginViewModel_logding>(context,listen: false).getPass,
               //text field 文本对象  Flutter自带组件
               decoration: InputDecoration(
                 //decoration 装饰
@@ -113,8 +131,8 @@ class _loginState extends State<login> {
               children: [
             WeButton(
               "登录", // 全局  of 在 <类型>        传哪里  本页面控制块
-              size: WeButtonSize.mini,
-              loading: Provider.of<LoginViewModel_logding>(context).getIsLogin,
+              size: WeButtonSize.mini,//     在类似的写法中 不需要更改状态 写成这样安全
+              loading: Provider.of<LoginViewModel_logding>(context,listen: false).getIsLogin,
               theme: WeButtonType.primary,
               onClick: () {
                 print("登录点击事件");
@@ -130,7 +148,7 @@ class _loginState extends State<login> {
               onClick: () {
                 print("注册点击事件");
                 _a = 2;
-                _login();
+                Navigator.of(context).popAndPushNamed("register");
               },
             ),
           ]),
@@ -198,8 +216,8 @@ class _loginState extends State<login> {
   }
 
   void _login() {
-// 在当前上下文读取        在viewmodel 中转层    上下文传进去    这句有问题
-    context.read<LoginViewModel_logding>().Logind(context);
+// 在当前上下文读取  Provider    在viewmodel 中转层    上下文传进去    这句有问题
+    context.read<LoginViewModel_logding>().Logind(_user.text,_pass.text);
     print("Login执行结束");
 /*    new Timer(Duration(seconds: 2), () {
       //释放 二值信号量
@@ -226,7 +244,7 @@ class Denglu extends StatelessWidget {
   Widget build(BuildContext context) {
     return WeButton(
       "回调", // 全局  of 在 <类型>        传哪里  本页面控制块
-      loading: Provider.of<LoginViewModel_logding>(context).getIsLogin,
+      loading: Provider.of<LoginViewModel_logding>(context,listen: false).getIsLogin,
       theme: WeButtonType.primary,
       onClick: () {
         print("回调");

@@ -57,6 +57,8 @@ dependencies:
   flutter_luban: ^0.1.11
   #轮播图
   flutter_swiper: ^1.1.6
+  #事件订阅处理
+  event: ^1.1.5
 
 dev_dependencies:
   flutter_test:

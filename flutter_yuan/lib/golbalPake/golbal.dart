@@ -4,7 +4,7 @@ class Golbal {
   static Golbal _instance;
   Dio dio;
 
-  static Golbal  getInstance() {
+  static Golbal getInstance() {
     if (_instance == null) {
       //为空 创建一个Golbal
       _instance = new Golbal(); //这里的Golbal 是无参数构造
@@ -15,7 +15,8 @@ class Golbal {
   Golbal() {
     //无参构造
     dio = new Dio(); //对Dio 进行初始化
-    dio.options = BaseOptions(//OPtions 选择
+    dio.options = BaseOptions(
+      //OPtions 选择
       //base 基本选项
       baseUrl: "http://42.193.118.40:3000",
       // 这里的/不用加 使用的时候加
@@ -44,12 +45,12 @@ class Golbal {
         print("返回" + e.toString());
       }, //Response 反应 报错时候拦截
           onError: (e) {
-            if (e.type == DioErrorType.CONNECT_TIMEOUT) {
-              print("错误" + e.toString());
-            } else {
-              print("Connect超时错误");
-            }
-          }),
+        if (e.type == DioErrorType.CONNECT_TIMEOUT) {
+          print("错误" + e.toString());
+        } else {
+          print("Connect超时错误");
+        }
+      }),
     );
   }
 }
