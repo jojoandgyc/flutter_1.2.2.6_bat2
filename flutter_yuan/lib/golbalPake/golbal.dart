@@ -1,8 +1,14 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:weui/toast/index.dart';
 
 class Golbal {
   static Golbal _instance;
   Dio dio;
+  String token;
+  Map user;
+  BuildContext context;
+  var loading;
 
   static Golbal getInstance() {
     if (_instance == null) {
@@ -24,6 +30,10 @@ class Golbal {
       //connect 连接 超时
       sendTimeout: 5000,
       receiveTimeout: 5000,
+//                 以application/x-www-form-urlencoded格式编码
+      contentType: Headers.formUrlEncodedContentType,
+      // response 返回   json
+      responseType: ResponseType.json,
       //receive 接收 超时
       headers: {
         "token": "321213123",
@@ -32,10 +42,28 @@ class Golbal {
         "msg": "string"
       },
       //Headers 头  Encoded 编码
-      contentType: Headers.formUrlEncodedContentType,
-      responseType: ResponseType.json, //Response 反应
+      /*contentType: Headers.formUrlEncodedContentType,
+      responseType: ResponseType.json, //Response 反应*/
     ); //Wrapper 包装纸  Interceptors 拦截器
-    dio.interceptors.add(
+    dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options) {
+        loading = WeToast.loading(context)(message: "Loading...");
+      },
+      onResponse: (e) {
+        loading();
+      },
+      onError: (e) {
+        loading();
+        String msg = "";
+        if (e.type == DioErrorType.CONNECT_TIMEOUT) {
+          msg = "连接超时错误";
+        } else {
+          msg = "接口错误！";
+        }
+        WeToast.fail(context)(message: msg);
+      },
+    ));
+    /*dio.interceptors.add(//onRequest 查询
       InterceptorsWrapper(onRequest: (options) {
         //Request 请求
         print("请求" + options.headers.toString());
@@ -51,6 +79,6 @@ class Golbal {
           print("Connect超时错误");
         }
       }),
-    );
+    );*/
   }
 }
