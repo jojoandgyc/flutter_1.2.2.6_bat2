@@ -148,7 +148,7 @@ class _loginState extends State<login> {
               onClick: () {
                 print("注册点击事件");
                 _a = 2;
-                Navigator.of(context).popAndPushNamed("register");
+                Navigator.of(context).pushNamed("register");
               },
             ),
           ]),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_yuan/mvvmDemo_View/login.dart';
 import 'package:flutter_yuan/mvvmDemo_ViewModel/login_mvvmviewmodel.dart';
+import 'package:flutter_yuan/mvvmDemo_ViewModel/register_VIewModel.dart';
 import 'package:flutter_yuan/routes/routes.dart';
 import 'package:flutter_yuan/utils_rsa/tuils.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
@@ -16,7 +17,9 @@ void main() {
         providers: [
           ChangeNotifierProvider(
               create: (context)=>LoginViewModel_logding(),
-          ),
+          ),          ChangeNotifierProvider(
+            create: (context)=>RegisterViewModel(),
+          )
         ],
         child:MyApp() ,
       ),
